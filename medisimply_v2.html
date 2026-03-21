@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MediSimply - Medicine Made Simple</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Sinhala:wght@400;600;700&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary: #1A6B4F;
+    --primary-light: #E8F5EE;
+    --primary-dark: #0D4A35;
+    --accent: #D4A843;
+    --accent-light: #FFF8E7;
+    --text: #2D3436;
+    --text-light: #636E72;
+    --bg: #FAFCFB;
+    --white: #FFFFFF;
+    --border: #DFE6E9;
+    --error: #D63031;
+    --warning-bg: #FFF3CD;
+    --warning-border: #FFECB5;
+    --warning-text: #664D03;
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
+    --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+    --shadow-lg: 0 8px 30px rgba(0,0,0,0.1);
+    --radius: 14px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Source Sans 3', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    line-height: 1.6;
+  }
+
+  .header {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: var(--shadow-md);
+  }
+
+  .header-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 18px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .logo { display: flex; align-items: center; gap: 12px; }
+
+  .logo-icon {
+    width: 44px; height: 44px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 24px;
+  }
+
+  .logo-text h1 { font-size: 20px; font-weight: 700; color: white; }
+  .logo-text p { font-size: 12px; color: rgba(255,255,255,0.7); }
+
+  .status-badge {
+    display: flex; align-items: center; gap: 8px;
+    padding: 6px 14px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 20px;
+  }
+
+  .status-badge .dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: #2ECC71;
+    animation: pulse 2s infinite;
+  }
+
+  .status-badge span { font-size: 13px; color: rgba(255,255,255,0.8); }
+
+  @keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:0.4; } }
+
+  .main { max-width: 900px; margin: 0 auto; padding: 32px 24px; }
+
+  /* Welcome */
+  .welcome {
+    background: var(--white);
+    border-radius: var(--radius);
+    padding: 28px 32px;
+    margin-bottom: 28px;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border);
+    display: flex; align-items: center; gap: 20px;
+  }
+
+  .welcome-icon { font-size: 48px; flex-shrink: 0; }
+  .welcome h2 { font-size: 22px; font-weight: 700; color: var(--primary-dark); margin-bottom: 4px; }
+  .welcome p { font-size: 16px; color: var(--text-light); }
+
+  .welcome-sinhala {
+    font-family: 'Noto Sans Sinhala', sans-serif;
+    font-size: 15px; color: var(--primary); margin-top: 4px; font-weight: 500;
+  }
+
+  /* Disclaimer */
+  .disclaimer {
+    background: var(--accent-light);
+    border: 1.5px solid #E8D5A0;
+    border-radius: 12px;
+    padding: 16px 20px;
+    display: flex; align-items: flex-start; gap: 12px;
+    margin-bottom: 28px;
+  }
+  .disclaimer-icon { font-size: 22px; flex-shrink: 0; }
+  .disclaimer p { font-size: 14px; color: #7D6B2C; line-height: 1.5; }
+  .disclaimer strong { color: #5E4F1E; }
+
+  /* Search Section */
+  .search-section {
+    background: var(--white);
+    border-radius: var(--radius);
+    padding: 28px 32px;
+    margin-bottom: 28px;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border);
+  }
+
+  .section-label {
+    font-size: 18px; font-weight: 700; color: var(--text);
+    margin-bottom: 4px;
+  }
+
+  .section-label-sinhala {
+    font-family: 'Noto Sans Sinhala', sans-serif;
+    font-size: 15px; color: var(--text-light); margin-bottom: 16px;
+  }
+
+  .search-box {
+    display: flex; gap: 12px;
+  }
+
+  .search-input {
+    flex: 1;
+    padding: 16px 20px;
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    font-size: 20px;
+    font-family: inherit;
+    color: var(--text);
+    transition: border-color 0.2s, box-shadow 0.2s;
+    background: var(--bg);
+  }
+
+  .search-input:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 4px rgba(26,107,79,0.1);
+    background: var(--white);
+  }
+
+  .search-input::placeholder { color: #B2BEC3; font-size: 18px; }
+
+  .btn-search {
+    padding: 16px 32px;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 18px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: inherit;
+    white-space: nowrap;
+    min-width: 180px;
+  }
+
+  .btn-search:hover { transform: translateY(-1px); box-shadow: var(--shadow-lg); }
+  .btn-search:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+  /* Quick suggestions */
+  .suggestions { margin-top: 16px; }
+  .suggestions-label {
+    font-size: 13px; font-weight: 600; color: var(--text-light);
+    text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px;
+  }
+  .suggestion-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+
+  .suggestion-chip {
+    padding: 7px 14px;
+    border: 1.5px solid var(--border);
+    border-radius: 50px;
+    background: var(--white);
+    font-size: 14px; font-weight: 500; color: var(--text);
+    cursor: pointer;
+    transition: all 0.15s;
+    font-family: inherit;
+  }
+  .suggestion-chip:hover {
+    border-color: var(--primary);
+    background: var(--primary-light);
+    color: var(--primary-dark);
+  }
+
+  /* Loading */
+  .loading {
+    display: none;
+    text-align: center;
+    padding: 50px 40px;
+    background: var(--white);
+    border-radius: var(--radius);
+    margin-bottom: 28px;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border);
+  }
+  .loading.visible { display: block; }
+
+  .spinner {
+    width: 48px; height: 48px;
+    border: 4px solid var(--border);
+    border-top-color: var(--primary);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin: 0 auto 16px;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .loading p { font-size: 17px; color: var(--text-light); }
+  .loading .sinhala-loading {
+    font-family: 'Noto Sans Sinhala', sans-serif;
+    font-size: 15px; color: var(--primary); margin-top: 6px;
+  }
+
+  /* Not in database warning */
+  .db-warning {
+    background: var(--warning-bg);
+    border: 1.5px solid var(--warning-border);
+    border-radius: 12px;
+    padding: 14px 20px;
+    margin-bottom: 20px;
+    display: flex; align-items: flex-start; gap: 10px;
+    animation: fadeUp 0.3s ease-out;
+  }
+  .db-warning p { font-size: 14px; color: var(--warning-text); line-height: 1.5; }
+  .db-warning strong { color: #3D2E00; }
+
+  /* Verified badge */
+  .db-verified {
+    background: var(--primary-light);
+    border: 1.5px solid #B8E6D0;
+    border-radius: 12px;
+    padding: 14px 20px;
+    margin-bottom: 20px;
+    display: flex; align-items: flex-start; gap: 10px;
+    animation: fadeUp 0.3s ease-out;
+  }
+  .db-verified p { font-size: 14px; color: var(--primary-dark); line-height: 1.5; }
+
+  /* Error */
+  .error-box {
+    display: none;
+    background: #FFF0F0;
+    border: 1.5px solid #FFCCCC;
+    border-radius: 12px;
+    padding: 16px 20px;
+    margin-bottom: 28px;
+    color: var(--error); font-weight: 500;
+  }
+  .error-box.visible { display: block; }
+
+  /* Results */
+  .results { display: none; }
+  .results.visible { display: block; }
+
+  /* Drug name header */
+  .drug-header {
+    text-align: center;
+    margin-bottom: 24px;
+    animation: fadeUp 0.3s ease-out;
+  }
+  .drug-header h2 {
+    font-size: 28px; font-weight: 700; color: var(--primary-dark);
+  }
+
+  .result-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    margin-bottom: 20px;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border);
+    overflow: hidden;
+    animation: fadeUp 0.4s ease-out;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .result-header {
+    padding: 18px 24px;
+    display: flex; align-items: center; gap: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .result-icon {
+    width: 40px; height: 40px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; flex-shrink: 0;
+  }
+
+  .result-icon.blue { background: #EBF5FB; }
+  .result-icon.green { background: #E8F8F5; }
+  .result-icon.orange { background: #FEF5E7; }
+  .result-icon.red { background: #FDEDEC; }
+
+  .result-title { font-size: 16px; font-weight: 700; color: var(--text); }
+  .result-title-sinhala {
+    font-family: 'Noto Sans Sinhala', sans-serif;
+    font-size: 14px; color: var(--text-light);
+  }
+
+  .result-body { padding: 20px 24px; }
+
+  .result-english {
+    font-size: 18px; line-height: 1.8; color: var(--text);
+    margin-bottom: 16px;
+  }
+
+  .result-sinhala {
+    font-family: 'Noto Sans Sinhala', sans-serif;
+    font-size: 18px; line-height: 2;
+    color: var(--primary-dark);
+    background: var(--primary-light);
+    padding: 16px 20px;
+    border-radius: 10px;
+    border-left: 4px solid var(--primary);
+  }
+
+  /* Key Points */
+  .key-points-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    margin-bottom: 20px;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border);
+    padding: 24px;
+    animation: fadeUp 0.4s ease-out;
+  }
+
+  .kp-title {
+    font-size: 16px; font-weight: 700; color: var(--text);
+    margin-bottom: 14px;
+    display: flex; align-items: center; gap: 8px;
+  }
+
+  .kp-item {
+    display: flex; align-items: flex-start; gap: 10px;
+    margin-bottom: 10px; font-size: 16px; color: var(--text);
+  }
+
+  .kp-num {
+    width: 24px; height: 24px; border-radius: 50%;
+    background: var(--primary); color: white;
+    font-size: 13px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; margin-top: 2px;
+  }
+
+  /* Search again */
+  .search-again {
+    text-align: center;
+    margin-top: 8px;
+    margin-bottom: 20px;
+  }
+
+  .btn-again {
+    padding: 12px 28px;
+    background: var(--white);
+    color: var(--primary);
+    border: 2px solid var(--primary);
+    border-radius: 10px;
+    font-size: 16px; font-weight: 600;
+    cursor: pointer; font-family: inherit;
+    transition: all 0.2s;
+  }
+  .btn-again:hover { background: var(--primary); color: white; }
+
+  .footer {
+    max-width: 900px;
+    margin: 20px auto 40px;
+    padding: 0 24px;
+    text-align: center;
+  }
+  .footer p { font-size: 13px; color: var(--text-light); }
+
+  @media (max-width: 600px) {
+    .main { padding: 20px 16px; }
+    .search-section, .result-card, .welcome { padding: 20px; }
+    .welcome { flex-direction: column; text-align: center; }
+    .search-box { flex-direction: column; }
+    .btn-search { min-width: auto; }
+    .search-input { font-size: 18px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <div class="logo">
+      <div class="logo-icon">💊</div>
+      <div class="logo-text">
+        <h1>MediSimply</h1>
+        <p>Medicine Made Simple</p>
+      </div>
+    </div>
+    <div class="status-badge">
+      <div class="dot" id="statusDot"></div>
+      <span id="statusText">Connecting...</span>
+    </div>
+  </div>
+</header>
+
+<main class="main">
+
+  <div class="welcome">
+    <div class="welcome-icon">👴🏽</div>
+    <div>
+      <h2>Understand Your Medicine</h2>
+      <p>Type the name of your medicine below. We'll explain everything in simple words.</p>
+      <p class="welcome-sinhala">ඔබේ බෙහෙතේ නම පහතින් ටයිප් කරන්න. අපි සියල්ල සරල වචනවලින් පැහැදිලි කරමු.</p>
+    </div>
+  </div>
+
+  <div class="disclaimer">
+    <div class="disclaimer-icon">⚠️</div>
+    <p><strong>Important:</strong> This tool explains medicine information in simple words. It is <strong>not medical advice</strong>. Always follow your doctor's instructions. | <strong>වැදගත්:</strong> මෙය වෛද්‍ය උපදෙස් නොවේ. සැමවිටම ඔබේ වෛද්‍යවරයාගේ උපදෙස් අනුගමනය කරන්න.</p>
+  </div>
+
+  <!-- Search -->
+  <div class="search-section" id="searchSection">
+    <div class="section-label">🔍 Enter Medicine Name</div>
+    <div class="section-label-sinhala">බෙහෙතේ නම ඇතුළත් කරන්න</div>
+
+    <div class="search-box">
+      <input type="text" class="search-input" id="searchInput"
+             placeholder="e.g. Amoxicillin, Metformin, Aspirin..."
+             onkeydown="if(event.key==='Enter') search()">
+      <button class="btn-search" id="searchBtn" onclick="search()">
+        ✨ Explain Medicine
+      </button>
+    </div>
+
+    <div class="suggestions">
+      <div class="suggestions-label">Common medicines →</div>
+      <div class="suggestion-chips" id="suggestionChips">
+        <span style="color:var(--text-light);font-size:14px;">Loading...</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading -->
+  <div class="loading" id="loading">
+    <div class="spinner"></div>
+    <p id="loadingText">Looking up your medicine...</p>
+    <p class="sinhala-loading">ඔබේ බෙහෙත සොයමින්...</p>
+  </div>
+
+  <!-- Error -->
+  <div class="error-box" id="errorBox"></div>
+
+  <!-- Results -->
+  <div class="results" id="results"></div>
+
+</main>
+
+<footer class="footer">
+  <p>MediSimply — Final Year Project by Sanura Wijerathne | Supervised by Ms. M.F.F. Nuha | Staffordshire University</p>
+</footer>
+
+<script>
+const API_URL = "http://127.0.0.1:8000";
+
+// Check API status
+async function checkAPI() {
+    try {
+        const res = await fetch(API_URL);
+        if (res.ok) {
+            document.getElementById("statusDot").style.background = "#2ECC71";
+            document.getElementById("statusText").textContent = "API Connected";
+        }
+    } catch {
+        document.getElementById("statusDot").style.background = "#E74C3C";
+        document.getElementById("statusText").textContent = "API Offline";
+    }
+}
+
+// Load drug suggestions from API
+async function loadSuggestions() {
+    try {
+        const res = await fetch(`${API_URL}/drugs`);
+        const drugs = await res.json();
+        const container = document.getElementById("suggestionChips");
+        container.innerHTML = "";
+
+        drugs.slice(0, 12).forEach(name => {
+            const chip = document.createElement("button");
+            chip.className = "suggestion-chip";
+            chip.textContent = name;
+            chip.onclick = () => {
+                document.getElementById("searchInput").value = name;
+                search();
+            };
+            container.appendChild(chip);
+        });
+    } catch {
+        document.getElementById("suggestionChips").innerHTML =
+            '<span style="color:var(--error);font-size:14px;">Could not load. Is the API running?</span>';
+    }
+}
+
+// Main search function
+async function search() {
+    const name = document.getElementById("searchInput").value.trim();
+    if (!name) return;
+
+    // Show loading
+    document.getElementById("loading").classList.add("visible");
+    document.getElementById("results").classList.remove("visible");
+    document.getElementById("errorBox").classList.remove("visible");
+    document.getElementById("searchBtn").disabled = true;
+    document.getElementById("loadingText").textContent = `Looking up ${name}...`;
+
+    try {
+        const res = await fetch(`${API_URL}/lookup`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ medicine_name: name }),
+        });
+
+        if (!res.ok) {
+            const err = await res.json();
+            throw new Error(err.detail || "Something went wrong");
+        }
+
+        const data = await res.json();
+        showResults(data);
+
+    } catch (e) {
+        document.getElementById("errorBox").textContent = `Error: ${e.message}`;
+        document.getElementById("errorBox").classList.add("visible");
+    } finally {
+        document.getElementById("loading").classList.remove("visible");
+        document.getElementById("searchBtn").disabled = false;
+    }
+}
+
+function showResults(data) {
+    const r = document.getElementById("results");
+    let html = "";
+
+    // Drug name header
+    html += `<div class="drug-header"><h2>💊 ${data.medicine_name}</h2></div>`;
+
+    // Database status badge
+    if (data.found_in_database) {
+        html += `
+            <div class="db-verified">
+                <span style="font-size:18px;">✅</span>
+                <p><strong>Verified Source:</strong> This information comes from our verified openFDA drug database and has been simplified by AI for easier understanding.</p>
+            </div>`;
+    } else {
+        html += `
+            <div class="db-warning">
+                <span style="font-size:18px;">⚠️</span>
+                <p><strong>Not in our database:</strong> This medicine was not found in our verified database. The information below is based on general AI knowledge. Please verify with your doctor or pharmacist.</p>
+            </div>`;
+    }
+
+    // Section cards
+    html += buildCard("💊", "blue",
+        "What This Medicine Does", "මෙම බෙහෙත කරන දේ",
+        data.what_it_does.english, data.what_it_does.sinhala);
+
+    html += buildCard("⏰", "green",
+        "How To Take This Medicine", "මෙම බෙහෙත ගන්නේ කෙසේද",
+        data.how_to_take.english, data.how_to_take.sinhala);
+
+    html += buildCard("⚡", "orange",
+        "Warnings & Side Effects", "අනතුරු ඇඟවීම් සහ අතුරු ආබාධ",
+        data.warnings_and_side_effects.english, data.warnings_and_side_effects.sinhala);
+
+    html += buildCard("🚫", "red",
+        "Who Should NOT Take This", "මෙම බෙහෙත නොගත යුත්තේ කාටද",
+        data.who_should_not_take.english, data.who_should_not_take.sinhala);
+
+    // Key points
+    if (data.key_points && data.key_points.length) {
+        html += `<div class="key-points-card">
+            <div class="kp-title">📌 Key Points to Remember</div>
+            ${data.key_points.map((p, i) => `
+                <div class="kp-item">
+                    <div class="kp-num">${i + 1}</div>
+                    <span>${p}</span>
+                </div>
+            `).join("")}
+        </div>`;
+    }
+
+    // Search again button
+    html += `<div class="search-again">
+        <button class="btn-again" onclick="resetSearch()">🔍 Search Another Medicine</button>
+    </div>`;
+
+    r.innerHTML = html;
+    r.classList.add("visible");
+    r.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+function buildCard(icon, color, title, titleSinhala, english, sinhala) {
+    return `
+        <div class="result-card">
+            <div class="result-header">
+                <div class="result-icon ${color}">${icon}</div>
+                <div>
+                    <div class="result-title">${title}</div>
+                    <div class="result-title-sinhala">${titleSinhala}</div>
+                </div>
+            </div>
+            <div class="result-body">
+                <div class="result-english">${english}</div>
+                <div class="result-sinhala">${sinhala}</div>
+            </div>
+        </div>`;
+}
+
+function resetSearch() {
+    document.getElementById("results").classList.remove("visible");
+    document.getElementById("results").innerHTML = "";
+    document.getElementById("searchInput").value = "";
+    document.getElementById("searchInput").focus();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+// Init
+checkAPI();
+loadSuggestions();
+</script>
+
+</body>
+</html>
