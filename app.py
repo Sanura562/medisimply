@@ -87,6 +87,7 @@ MEDICAL_GLOSSARY = {
     "thyroid": "තයිරොයිඩ්",
     "anemia": "රක්තහීනතාවය (ලේ මදිකම)",
 
+
     # --- Medicine Types ---
     "antibiotic": "ප්‍රතිජීවක බෙහෙත (ඇන්ටිබයොටික්)",
     "painkiller": "වේදනා නාශක බෙහෙත",
@@ -191,6 +192,7 @@ if __name__ == "__main__":
         print(f"\n  {cat}: {len(terms)} terms")
         for t in terms[:5]:
             print(f"    {t} → {MEDICAL_GLOSSARY[t]}")
+
 
 load_dotenv()
 client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
@@ -306,7 +308,6 @@ def load_rag():
 
 
 def get_embedding(text):
-    """Convert text to vector using Gemini embedding model"""
     response = client.models.embed_content(
         model="gemini-embedding-001",
         contents=text,
