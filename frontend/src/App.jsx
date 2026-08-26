@@ -53,7 +53,7 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen bg-[#FAFCFB]">
+    <div className="min-h-screen bg-surface">
       <Header dbCount={dbCount} setDbCount={setDbCount} apiUrl={API_URL} />
 
       <main className="max-w-[900px] mx-auto px-6 py-8">
@@ -67,7 +67,7 @@ export default function App() {
         {loading && <Loading />}
 
         {error && (
-          <div className="bg-red-50 border-2 border-red-200 rounded-xl p-5 mb-7 text-red-600 font-medium">
+          <div className="bg-tertiary-fixed/35 rounded-card p-5 mb-7 text-on-surface font-medium">
             {error}
           </div>
         )}
@@ -75,7 +75,7 @@ export default function App() {
         {results && <Results data={results} onReset={handleReset} />}
       </main>
 
-      <footer className="max-w-[900px] mx-auto px-6 py-8 text-center text-sm text-gray-400">
+      <footer className="max-w-[900px] mx-auto px-6 py-8 text-center text-sm text-on-surface/50">
         MediSimply — FYP by Sanura Wijerathne | Supervised by Ms. M.F.F. Nuha |
         Staffordshire University
       </footer>

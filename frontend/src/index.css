@@ -1,116 +1,67 @@
 @import "tailwindcss";
 
-:root {
-  --text: #6b6375;
-  --text-h: #08060d;
-  --bg: #fff;
-  --border: #e5e4e7;
-  --code-bg: #f4f3ec;
-  --accent: #aa3bff;
-  --accent-bg: rgba(170, 59, 255, 0.1);
-  --accent-border: rgba(170, 59, 255, 0.5);
-  --social-bg: rgba(244, 243, 236, 0.5);
-  --shadow:
-    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+/* Manrope, Source Sans 3, Noto Sans Sinhala are loaded via <link> tags in
+   index.html - not via @import here, since @import "tailwindcss" expands
+   inline into hundreds of lines and pushes any @import placed after it past
+   the "imports must come first" point once Vite's CSS processor resolves it. */
 
-  --sans: system-ui, "Segoe UI", Roboto, sans-serif;
-  --heading: system-ui, "Segoe UI", Roboto, sans-serif;
-  --mono: ui-monospace, Consolas, monospace;
+/*
+  Design tokens - "The Empathetic Apothecary" / Modern Pharmacy Aesthetic.
+  Registered via Tailwind v4's @theme so they become reusable utilities
+  (bg-primary, text-on-surface, rounded-card, shadow-ambient, ...) instead of
+  hardcoded hex values scattered across components.
+*/
+@theme {
+  --color-surface: #fbf9f4;
+  --color-surface-container-low: #f5f3ee;
+  --color-surface-container-lowest: #ffffff;
+  --color-primary: #00523a;
+  --color-primary-container: #1a6b4f;
+  --color-primary-fixed: #a5f2cf;
+  --color-tertiary-fixed: #ffdf9f;
+  --color-on-surface: #1b1c19;
+  --color-outline-variant: #bec9c2;
 
-  font: 18px/145% var(--sans);
-  letter-spacing: 0.18px;
-  color-scheme: light dark;
-  color: var(--text);
-  background: var(--bg);
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  --font-display: "Manrope", system-ui, sans-serif;
+  --font-body: "Source Sans 3", system-ui, sans-serif;
+  --font-sinhala: "Noto Sans Sinhala", system-ui, sans-serif;
 
-  @media (max-width: 1024px) {
-    font-size: 16px;
-  }
+  /* Named separately from Tailwind's built-in rounded-lg/rounded-xl scale so
+     small incidental elements (icon badges, thumbnails) keep sensible
+     defaults - only content cards and primary CTAs opt into these. */
+  --radius-card: 16px;
+  --radius-cta: 24px;
+
+  /* Ambient shadow is reserved for things that actually float (popovers,
+     hover-lift on buttons) - not applied to every card. See No-Line Rule. */
+  --shadow-ambient: 0 20px 40px rgba(27, 28, 25, 0.06);
+
+  /* Noto Sans Sinhala needs extra line-height so vocalic markers don't
+     stack/clip - use alongside font-sinhala. */
+  --leading-sinhala: 1.6;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text: #9ca3af;
-    --text-h: #f3f4f6;
-    --bg: #16171d;
-    --border: #2e303a;
-    --code-bg: #1f2028;
-    --accent: #c084fc;
-    --accent-bg: rgba(192, 132, 252, 0.15);
-    --accent-border: rgba(192, 132, 252, 0.5);
-    --social-bg: rgba(47, 48, 58, 0.5);
-    --shadow:
-      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
-  }
-
-  #social .button-icon {
-    filter: invert(1) brightness(2);
-  }
+:root {
+  color-scheme: light;
+  background: var(--color-surface);
+  color: var(--color-on-surface);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
 body {
   margin: 0;
-}
-
-#root {
-  width: 1126px;
-  max-width: 100%;
-  margin: 0 auto;
-  text-align: center;
-  border-inline: 1px solid var(--border);
-  min-height: 100svh;
-  display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
+  background: var(--color-surface);
 }
 
 h1,
-h2 {
-  font-family: var(--heading);
-  font-weight: 500;
-  color: var(--text-h);
+h2,
+h3 {
+  font-family: var(--font-display);
 }
 
-h1 {
-  font-size: 56px;
-  letter-spacing: -1.68px;
-  margin: 32px 0;
-  @media (max-width: 1024px) {
-    font-size: 36px;
-    margin: 20px 0;
-  }
-}
-h2 {
-  font-size: 24px;
-  line-height: 118%;
-  letter-spacing: -0.24px;
-  margin: 0 0 8px;
-  @media (max-width: 1024px) {
-    font-size: 20px;
-  }
-}
-p {
-  margin: 0;
-}
-
-code,
-.counter {
-  font-family: var(--mono);
-  display: inline-flex;
-  border-radius: 4px;
-  color: var(--text-h);
-}
-
-code {
-  font-size: 15px;
-  line-height: 135%;
-  padding: 4px 8px;
-  background: var(--code-bg);
-}
 @keyframes fadeUp {
   from {
     opacity: 0;

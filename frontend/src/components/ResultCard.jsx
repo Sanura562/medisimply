@@ -1,36 +1,43 @@
-const colorMap = {
-  blue: "bg-blue-50",
-  green: "bg-emerald-50",
-  orange: "bg-orange-50",
-  red: "bg-red-50",
+// Only two tonal families in this system: calm (primary) for everyday
+// informational sections, and warning (tertiary/gold, used sparingly) for
+// the sections that are genuinely about risk - warnings and contraindications.
+const toneMap = {
+  calm: { chip: "bg-primary/10 text-primary", sinhala: "bg-primary/8 text-primary" },
+  warning: {
+    chip: "bg-tertiary-fixed/50 text-on-surface",
+    sinhala: "bg-tertiary-fixed/25 text-on-surface",
+  },
 };
 
-export default function ResultCard({ icon, color, title, titleSi, data }) {
+export default function ResultCard({ icon, tone, title, titleSi, data }) {
+  const { chip, sinhala } = toneMap[tone] || toneMap.calm;
+
   return (
-    <div className="bg-white rounded-2xl mb-5 shadow-sm border border-gray-100 overflow-hidden">
-      {/* Header */}
-      <div className="px-6 py-4 flex items-center gap-3 border-b border-gray-100">
+    <div className="bg-surface-container-lowest rounded-card mb-5 overflow-hidden px-6 py-5">
+      {/* Header - no divider line beneath it; the gap to the body below is
+          pure vertical whitespace, per the No-Line Rule. */}
+      <div className="flex items-center gap-3 mb-4">
         <div
-          className={`w-10 h-10 rounded-xl ${colorMap[color]} flex items-center justify-center text-xl`}
+          className={`w-10 h-10 rounded-xl ${chip} flex items-center justify-center text-xl flex-shrink-0`}
         >
           {icon}
         </div>
         <div>
-          <div className="font-bold text-gray-800">{title}</div>
-          <div className="font-['Noto_Sans_Sinhala'] text-sm text-gray-400">
+          <div className="font-display font-bold text-on-surface">{title}</div>
+          <div className="font-sinhala leading-sinhala text-sm text-on-surface/50">
             {titleSi}
           </div>
         </div>
       </div>
 
       {/* Body */}
-      <div className="px-6 py-5">
-        <p className="text-lg leading-relaxed text-gray-800 mb-4">
-          {data.english}
-        </p>
-        <div className="font-['Noto_Sans_Sinhala'] text-lg leading-loose text-[#0D4A35] bg-[#E8F5EE] p-4 rounded-xl border-l-4 border-[#1A6B4F]">
-          {data.sinhala}
-        </div>
+      <p className="text-lg leading-relaxed text-on-surface mb-4">
+        {data.english}
+      </p>
+      <div
+        className={`font-sinhala leading-sinhala text-lg p-4 rounded-lg ${sinhala}`}
+      >
+        {data.sinhala}
       </div>
     </div>
   );

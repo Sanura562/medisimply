@@ -1,12 +1,16 @@
+import asyncio
 import json
 import os
 import numpy as np
 import faiss
 from dotenv import load_dotenv
 from google import genai
+from google.genai import types
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
+
+import mcp_client
 """
 Sinhala Medical Glossary for MediSimply
 ========================================
@@ -196,7 +200,11 @@ if __name__ == "__main__":
 
 load_dotenv()
 client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
-MODEL = "gemini-2.5-flash"
+# gemini-2.5-flash is deprecated for new API keys/projects (Google's Gemini 3.x
+# migration). gemini-3.7-flash (released 2026-08-13) is currently returning
+# intermittent 503s under high demand, so we default to gemini-3.6-flash, which
+# is stable; swap the string below once 3.7 settles down.
+MODEL = "gemini-3.6-flash"
 
 app = FastAPI(title="MediSimply API", version="4.0.0")
 
@@ -238,6 +246,7 @@ class MedicineResponse(BaseModel):
     who_should_not_take: SectionOutput
     key_points: list[str]
     rag_sources: list[SourceInfo] = []  # NEW: show where info came from
+    data_source: str = "ai_knowledge_only"  # "local_verified" | "live_mcp_lookup" | "ai_knowledge_only"
 
 
 class SearchResult(BaseModel):
@@ -264,8 +273,8 @@ def load_openfda_db():
         return []
 
 
-def search_medicine(name):
-    """Search both databases for a medicine"""
+def search_local_databases(name):
+    """Search both local databases (Kaggle + openFDA snapshot) for a medicine"""
     name_lower = name.lower().strip()
     kaggle_match = None
     openfda_match = None
@@ -286,6 +295,154 @@ def search_medicine(name):
             break
 
     return kaggle_match, openfda_match
+
+
+# --- Agentic MCP tool-calling ---
+# This is the NEW capability: instead of a hardcoded if/else deciding when to
+# hit the live openFDA API, Gemini's function calling decides for itself
+# whether the local match is good enough, based on a short summary of what
+# was found locally. Only if Gemini asks for the tool do we actually spawn
+# the MCP server (mcp_server/medicine_search_server.py) via mcp_client.
+
+SEARCH_MEDICINE_TOOL = types.Tool(function_declarations=[
+    types.FunctionDeclaration(
+        name="search_medicine",
+        description=(
+            "Look up a medicine LIVE on the openFDA drug label database via "
+            "MCP. Use this ONLY if the local database match is missing or "
+            "clearly insufficient (e.g. no indications/dosage/warnings info). "
+            "If the local match already has good information, do NOT call this."
+        ),
+        parameters={
+            "type": "object",
+            "properties": {
+                "drug_name": {
+                    "type": "string",
+                    "description": "The medicine name to look up on openFDA.",
+                }
+            },
+            "required": ["drug_name"],
+        },
+    )
+])
+
+AGENTIC_SYSTEM_INSTRUCTION = (
+    "You are deciding how to ground an answer about a medicine for MediSimply. "
+    "You will be shown a summary of what MediSimply's local, pre-verified "
+    "database already found for this medicine.\n\n"
+    "Call search_medicine ONLY if the local summary says no match was found, "
+    "or the matched entry is missing indications/dosage/warnings content "
+    "(e.g. fields are empty or 'N/A').\n\n"
+    "Do NOT call search_medicine if the local summary already contains real "
+    "indications, dosage, and warnings text - that data is already verified "
+    "and calling the tool again would be redundant. In that case, just "
+    "acknowledge the local match is sufficient and stop, without calling any tool."
+)
+
+
+def summarize_local_match(medicine_name, kaggle_match, openfda_match):
+    """Short text summary of what the local DB search found, for Gemini to judge."""
+    if not kaggle_match and not openfda_match:
+        return f"No local match found for '{medicine_name}' in either database."
+
+    parts = []
+    if kaggle_match:
+        parts.append(
+            f"Kaggle DB match: name={kaggle_match.get('name')}, "
+            f"composition={kaggle_match.get('composition', 'N/A')}, "
+            f"uses={kaggle_match.get('uses', 'N/A')}"
+        )
+    if openfda_match:
+        parts.append(
+            f"openFDA (local snapshot) match: name={openfda_match.get('name')}, "
+            f"indications={openfda_match.get('indications', 'N/A')}, "
+            f"dosage={openfda_match.get('dosage', 'N/A')}, "
+            f"warnings={openfda_match.get('warnings', 'N/A')}"
+        )
+    return "\n".join(parts)
+
+
+def _extract_function_call(response):
+    """Pull the first function_call part out of a Gemini response, if any."""
+    if not response.candidates:
+        return None
+    parts = response.candidates[0].content.parts or []
+    for part in parts:
+        if part.function_call:
+            return part.function_call
+    return None
+
+
+def decide_and_maybe_fetch_live(medicine_name, kaggle_match, openfda_match):
+    """
+    THE AGENTIC STEP.
+
+    Gives Gemini the local search summary + the search_medicine tool
+    declaration and lets IT decide whether to call the tool - there is no
+    hardcoded if/else here. If Gemini emits a function call, we execute it
+    via mcp_client (a real MCP round trip to mcp_server/medicine_search_server.py),
+    feed the tool result back to Gemini as a function response so it can
+    continue, and return the live data for grounding.
+
+    Returns the live MCP result dict (with "found": True) if Gemini called
+    the tool and openFDA had data, otherwise None.
+    """
+    local_summary = summarize_local_match(medicine_name, kaggle_match, openfda_match)
+
+    contents = [
+        types.Content(
+            role="user",
+            parts=[types.Part(text=(
+                f"User is asking about the medicine: '{medicine_name}'.\n\n"
+                f"Local database search result:\n{local_summary}\n\n"
+                "Decide whether to call search_medicine."
+            ))],
+        )
+    ]
+    config = types.GenerateContentConfig(
+        system_instruction=AGENTIC_SYSTEM_INSTRUCTION,
+        tools=[SEARCH_MEDICINE_TOOL],
+    )
+
+    response = client.models.generate_content(model=MODEL, contents=contents, config=config)
+    function_call = _extract_function_call(response)
+
+    if not function_call:
+        print(f"[Agentic] Gemini judged local data sufficient for '{medicine_name}' - no MCP call.")
+        return None
+
+    drug_name_arg = function_call.args.get("drug_name", medicine_name)
+    print(f"[Agentic] Gemini requested a live MCP lookup for '{drug_name_arg}'.")
+    live_result = asyncio.run(mcp_client.call_search_medicine(drug_name_arg))
+
+    # Feed the tool result back to Gemini and let it continue, per the
+    # function-calling contract. Its follow-up text isn't used further here -
+    # simplify_medicine() below still produces the actual structured output -
+    # but completing the round trip keeps this a genuine agentic tool call.
+    try:
+        contents.append(response.candidates[0].content)
+        # Gemini 3.x assigns each function_call an id and expects the matching
+        # function_response to echo it back (needed to correlate responses when
+        # the model makes parallel tool calls); Part.from_function_response()
+        # doesn't accept/propagate id, so build the FunctionResponse directly.
+        function_response = types.FunctionResponse(
+            id=function_call.id,
+            name="search_medicine",
+            response=live_result,
+        )
+        contents.append(types.Content(
+            role="user",
+            parts=[types.Part(function_response=function_response)],
+        ))
+        client.models.generate_content(model=MODEL, contents=contents, config=config)
+    except Exception as e:
+        print(f"[Agentic] Follow-up call after tool response failed (non-fatal): {e}")
+
+    if live_result.get("found"):
+        return live_result
+
+    print(f"[Agentic] MCP live lookup found nothing for '{drug_name_arg}': {live_result}")
+    return None
 
 
 # --- RAG: Retrieval ---
@@ -347,8 +504,27 @@ def retrieve_relevant_chunks(query, top_k=5):
         return []
 
 
+# FAISS always returns its top_k NEAREST neighbours, even for a query that
+# isn't really about anything in the index (there's no "no match" option).
+# For the NEW data_source label only (this does not affect what's passed to
+# simplify_medicine, or the rag_sources shown to the user - both unchanged),
+# a distance threshold distinguishes "actually relevant local passages" from
+# "nearest available passages that aren't really about this query", so a
+# nonsense drug name is correctly labeled ai_knowledge_only instead of
+# local_verified. Real matches in this dataset score ~0.5-0.7; unrelated
+# nearest-neighbours score ~0.77+.
+RAG_RELEVANCE_THRESHOLD = 0.72
+
+
+def _rag_results_are_relevant(rag_results):
+    if not rag_results:
+        return False
+    best_score = min(r.get("relevance_score", float("inf")) for r in rag_results)
+    return best_score < RAG_RELEVANCE_THRESHOLD
+
+
 # --- LLM with RAG ---
-def simplify_medicine(medicine_name, kaggle_data=None, openfda_data=None, rag_results=None):
+def simplify_medicine(medicine_name, kaggle_data=None, openfda_data=None, rag_results=None, mcp_live_data=None):
     """
     THE KEY DIFFERENCE WITH RAG:
     
@@ -392,6 +568,19 @@ From openFDA Verified Labels:
 - Dosage: {openfda_data.get('dosage', 'N/A')}
 - Warnings: {openfda_data.get('warnings', 'N/A')}
 - Contraindications: {openfda_data.get('contraindications', 'N/A')}
+""")
+
+    # NEW: live openFDA data fetched on-demand via the MCP tool call, when
+    # Gemini decided the local/RAG data above wasn't enough on its own.
+    if mcp_live_data and mcp_live_data.get("found"):
+        context_parts.append(f"""
+From Live openFDA Lookup (fetched live via MCP tool call):
+- Indications: {mcp_live_data.get('indications_and_usage', 'N/A')}
+- Dosage: {mcp_live_data.get('dosage_and_administration', 'N/A')}
+- Warnings: {mcp_live_data.get('warnings', 'N/A')}
+- Adverse Reactions: {mcp_live_data.get('adverse_reactions', 'N/A')}
+- Contraindications: {mcp_live_data.get('contraindications', 'N/A')}
+- Active Ingredient: {mcp_live_data.get('active_ingredient', 'N/A')}
 """)
 
     if context_parts:
@@ -497,8 +686,8 @@ def lookup_medicine(query: MedicineQuery):
     if not medicine_name:
         raise HTTPException(status_code=400, detail="Please enter a medicine name")
 
-    # Step 1: Search databases
-    kaggle_match, openfda_match = search_medicine(medicine_name)
+    # Step 1: Search local databases
+    kaggle_match, openfda_match = search_local_databases(medicine_name)
     found = kaggle_match is not None or openfda_match is not None
 
     # Step 2: RAG retrieval - find relevant passages
@@ -506,6 +695,23 @@ def lookup_medicine(query: MedicineQuery):
         f"{medicine_name} medicine uses dosage warnings side effects",
         top_k=5
     )
+
+    # Step 2.5 (NEW, agentic): let Gemini decide - based on what step 1/2 found -
+    # whether to call the live search_medicine MCP tool. No hardcoded if/else;
+    # Gemini's function calling makes the call. Never let a hiccup here (e.g.
+    # a transient Gemini/MCP error) crash the whole /lookup request.
+    try:
+        live_data = decide_and_maybe_fetch_live(medicine_name, kaggle_match, openfda_match)
+    except Exception as e:
+        print(f"[Agentic] tool-decision step failed, falling back to local/AI-only: {e}")
+        live_data = None
+
+    if live_data:
+        data_source = "live_mcp_lookup"
+    elif found or _rag_results_are_relevant(rag_results):
+        data_source = "local_verified"
+    else:
+        data_source = "ai_knowledge_only"
 
     # Step 3: Determine source info
     sources = []
@@ -515,6 +721,8 @@ def lookup_medicine(query: MedicineQuery):
         sources.append("Kaggle Medicine Database")
     if openfda_match:
         sources.append("openFDA Verified Labels")
+    if live_data:
+        sources.append("Live openFDA Lookup (via MCP)")
     if not sources:
         sources.append("AI Knowledge (not in verified database)")
     source_str = " + ".join(sources)
@@ -529,9 +737,9 @@ def lookup_medicine(query: MedicineQuery):
     elif openfda_match:
         display_name = openfda_match["name"]
 
-    # Step 4: Call LLM with RAG context
+    # Step 4: Call LLM with RAG context (+ live MCP data, if any)
     try:
-        result = simplify_medicine(medicine_name, kaggle_match, openfda_match, rag_results)
+        result = simplify_medicine(medicine_name, kaggle_match, openfda_match, rag_results, live_data)
 
         # Build source attribution for frontend
         rag_source_info = [
@@ -569,6 +777,7 @@ def lookup_medicine(query: MedicineQuery):
             ),
             key_points=result["key_points"],
             rag_sources=rag_source_info,
+            data_source=data_source,
         )
 
     except Exception as e:
