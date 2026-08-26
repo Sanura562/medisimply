@@ -17,7 +17,10 @@ export default function App() {
 
   // This function runs when user clicks "Explain Medicine"
   async function handleSearch(medicineName) {
-    if (!medicineName.trim()) return;
+    if (!medicineName.trim()) {
+      setError("Please enter a medicine name");
+      return;
+    }
 
     setLoading(true);
     setResults(null);
@@ -65,7 +68,7 @@ export default function App() {
 
         {error && (
           <div className="bg-red-50 border-2 border-red-200 rounded-xl p-5 mb-7 text-red-600 font-medium">
-            Error: {error}. Make sure the API is running.
+            {error}
           </div>
         )}
 
