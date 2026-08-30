@@ -1,0 +1,436 @@
+[
+  {
+    "medicine_name": "Atenolol",
+    "expected_data_source": [
+      "local_verified"
+    ],
+    "found_in_database": true,
+    "source": "Kaggle Medicine Database + openFDA Verified Labels",
+    "image_url": "https://onemg.gumlet.io/l_watermark_346,w_480,h_480/a_ignore,w_480,h_480,c_fit,q_auto,f_auto/428b24c1abf74d97a441ea6bfc46f151.jpg",
+    "composition": "Amlodipine (5mg) + Atenolol (50mg)",
+    "manufacturer": "Cipla Ltd",
+    "what_it_does": {
+      "english": "This medicine is Amlopres-AT Tablet. It contains Amlodipine (5mg) and Atenolol (50mg). It treats high blood pressure. Lowering blood pressure reduces the risk of strokes and heart attacks.",
+      "sinhala": "මේ බෙහෙත Amlopres-AT Tablet වේ. එහි Amlodipine (5mg) සහ Atenolol (50mg) අඩංගු වේ. මෙය අධික රුධිර පීඩනය අඩු කරයි. රුධිර පීඩනය පාලනය කිරීමෙන් අංශබාගය සහ හෘදයාබාධ ඇතිවීම වළක්වයි."
+    },
+    "how_to_take": {
+      "english": "Take one tablet a day. The starting dose is usually 50 mg. It takes one to two weeks to work fully. Your doctor may increase the dose to 100 mg.",
+      "sinhala": "දවසට එක පෙත්තක් ගන්න. ආරම්භක මාත්‍රාව සාමාන්‍යයෙන් 50 mg වේ. පූර්ණ ගුණය ලැබීමට සති එකක් හෝ දෙකක් යයි. වෛද්‍යවරයා මාත්‍රාව 100 mg දක්වා වැඩි කළ හැක."
+    },
+    "warnings_and_side_effects": {
+      "english": "This medicine may cause sleepiness, tiredness, or headaches. You may feel warm in your face or neck. Your ankles may swell. You may feel a slow or fast heart rate. Nausea, constipation, and cold hands or feet can happen. It can also lead to heart failure.",
+      "sinhala": "මේ බෙහෙතෙන් නිදිමත, මහන්සිය හෝ හිසකැක්කුම එන්න පුළුවන්. මුහුණ සහ බෙල්ල රත්වීම සිදුවිය හැක. කකුල් ඉදිමීම හෝ හද ගැස්ම වෙනස්වීම සිදුවිය හැක. බඩදඟලන ගතිය, මලබද්ධය සහ අත්පා සීතල වීමද විය හැක. මෙය හදවතේ අක්‍රියතාවයටද හේතුවිය හැක."
+    },
+    "who_should_not_take": {
+      "english": "Ask your doctor or pharmacist about this.",
+      "sinhala": "මේ පිළිබඳව ඔබේ වෛද්‍යවරයාගෙන් හෝ ඖෂධවේදියාගෙන් අසන්න."
+    },
+    "key_points": [
+      "Amlopres-AT Tablet contains Amlodipine (5mg) and Atenolol (50mg). / Amlopres-AT Tablet හි Amlodipine (5mg) සහ Atenolol (50mg) අඩංගු වේ.",
+      "It treats high blood pressure. / මෙය අධික රුධිර පීඩනය පාලනය කරයි.",
+      "It helps lower the risk of strokes and heart attacks. / මෙය අංශබාගය සහ හෘදයාබාධ අවදානම අඩු කරයි.",
+      "The usual starting dose is 50 mg once daily. / සාමාන්‍ය ආරම්භක මාත්‍රාව දවසට 50 mg පෙත්තකි.",
+      "Common side effects include sleepiness, swollen ankles, and tiredness. / නිදිමත, කකුල් ඉදිමීම සහ මහන්සිය මෙහි අතුරු ආබාධ විය හැක."
+    ],
+    "rag_sources": [],
+    "data_source": "local_verified",
+    "metrics": {
+      "simplified_text": "This medicine is Amlopres-AT Tablet. It contains Amlodipine (5mg) and Atenolol (50mg). It treats high blood pressure. Lowering blood pressure reduces the risk of strokes and heart attacks. Take one tablet a day. The starting dose is usually 50 mg. It takes one to two weeks to work fully. Your doctor may increase the dose to 100 mg. This medicine may cause sleepiness, tiredness, or headaches. You may feel warm in your face or neck. Your ankles may swell. You may feel a slow or fast heart rate. Nausea, constipation, and cold hands or feet can happen. It can also lead to heart failure. Ask your doctor or pharmacist about this.",
+      "source_text": null,
+      "flesch_reading_ease": 81.19,
+      "flesch_kincaid_grade": 3.77,
+      "meets_grade_6_target": true,
+      "simplification_ratio_NOT_SARI": null,
+      "fidelity_check_pass": true,
+      "sinhala_complete": true
+    },
+    "matched_product_name": "Amlopres-AT Tablet"
+  },
+  {
+    "medicine_name": "Metformin",
+    "matched_product_name": "Genericart Metformin Hydrochloride 500mg Tablet",
+    "expected_data_source": [
+      "local_verified"
+    ],
+    "found_in_database": true,
+    "source": "RAG Retrieved Passages + Kaggle Medicine Database + openFDA Verified Labels + Live openFDA Lookup (via MCP)",
+    "image_url": "https://onemg.gumlet.io/l_watermark_346,w_480,h_480/a_ignore,w_480,h_480,c_fit,q_auto,f_auto/cropped/kmforl6jmg0rhzaikfar.jpg",
+    "composition": "Metformin (500mg)",
+    "manufacturer": "Swast Aushadhi Seva Generic Medicine Store",
+    "what_it_does": {
+      "english": "This medicine helps adults with type 2 diabetes control their blood sugar levels. You must use it together with healthy eating and regular exercise.",
+      "sinhala": "මේ ඖෂධය වර්ග 2 දියවැඩියාව තියෙන වැඩිහිටියන්ගේ ලේ වල සීනි පාලනය කිරීමට උදව් වෙනවා. මෙය නිවැරදි කෑම පාලනය සහ ව්‍යායාම සමඟ ලබාගත යුතුයි."
+    },
+    "how_to_take": {
+      "english": "Swallow ZITUVIMET twice daily with your meals. Your doctor will test your kidneys before starting. Maximum daily dose is 100 mg sitagliptin and 2,000 mg metformin HCl.",
+      "sinhala": "ZITUVIMET පෙති දවසට දෙපාරක් කෑම ගන්න අතරතුර ගිලින්න. බෙහෙත පටන් ගන්න කලින් දොස්තර මහතා ඔබේ වකුගඩු පරීක්ෂා කරයි. දවසකට උපරිමයෙන් 100 mg sitagliptin සහ 2,000 mg metformin HCl පමණක් ගන්න."
+    },
+    "warnings_and_side_effects": {
+      "english": "Common side effects include diarrhea, nausea, vomiting, gas, headache, and cold symptoms. Severe risks include lactic acidosis, pancreatitis, low blood sugar, and kidney failure.",
+      "sinhala": "බඩයෑම, වමනය, බඩේ ගෑස්, හිසරදය සහ සෙම්ප්‍රතිශ්‍යාව වැනි අතුරු ආබාධ එන්න පුළුවන්. ලැක්ටික් ඇසිඩෝසිස්, අග්න්‍යාශයේ ඉදිමීම, සීනි අඩුවීම සහ වකුගඩු හානි වීම වැනි බරපතල තත්ත්වයන්ද ඇතිවිය හැක."
+    },
+    "who_should_not_take": {
+      "english": "Do not take this medicine if you have type 1 diabetes or severe kidney problems. Avoid it if you have metabolic acidosis, diabetic ketoacidosis, or severe allergies to sitagliptin or metformin.",
+      "sinhala": "ඔබට වර්ග 1 දියවැඩියාව හෝ බරපතල වකුගඩු රෝග තිබේ නම් මෙය ගන්න එපා. ඩයබෙටික් කීටෝඇසිඩෝසිස්, මෙටාබොලික් ඇසිඩෝසිස් හෝ මෙම ඖෂධ වලට අසාත්මිකතා ඇත්නම් භාවිතයෙන් වළකින්න."
+    },
+    "key_points": [
+      "Take ZITUVIMET twice daily with meals to lower blood sugar.",
+      "Combine this medicine with healthy eating and exercise.",
+      "Your doctor must test your kidneys before you start taking it.",
+      "Do not use if you have severe kidney damage or type 1 diabetes.",
+      "Watch out for common side effects like diarrhea, nausea, and headache."
+    ],
+    "rag_sources": [
+      {
+        "text": "( 2.1 ) The recommended starting dose in patients not currently treated with metformin is 50 mg sitagliptin and 500 mg metformin HCl twice daily, with gradual dose escalation recommended to reduce gas...",
+        "drug_name": "Metformin",
+        "section": "dosage",
+        "source": "openFDA Drug Labels"
+      },
+      {
+        "text": "( 2.1 ) The starting dose in patients already treated with metformin should provide sitagliptin dosed as 50 mg twice daily (100 mg total daily dose) and the dose of metformin already being taken.",
+        "drug_name": "Metformin",
+        "section": "dosage",
+        "source": "openFDA Drug Labels"
+      },
+      {
+        "text": "2 DOSAGE AND ADMINISTRATION Take ZITUVIMET orally twice daily with meals. ( 2.1 ) Individualize the dosage of ZITUVIMET on the basis of the patient's current regimen, effectiveness, and tolerability. ...",
+        "drug_name": "Metformin",
+        "section": "dosage",
+        "source": "openFDA Drug Labels"
+      },
+      {
+        "text": "For patients taking metformin HCl 850 mg twice daily, the recommended starting dose of ZITUVIMET is 50 mg sitagliptin and 1,000 mg metformin HCl twice daily. ( 2.1 ) Prior to initiation, assess renal ...",
+        "drug_name": "Metformin",
+        "section": "dosage",
+        "source": "openFDA Drug Labels"
+      },
+      {
+        "text": "1 INDICATIONS AND USAGE ZITUVIMET is a combination of sitagliptin, a dipeptidyl peptidase-4 (DPP-4) inhibitor, and metformin hydrochloride (HCl), a biguanide, indicated as an adjunct to diet and exerc...",
+        "drug_name": "Metformin",
+        "section": "indications",
+        "source": "openFDA Drug Labels"
+      }
+    ],
+    "data_source": "live_mcp_lookup",
+    "metrics": {
+      "simplified_text": "This medicine helps adults with type 2 diabetes control their blood sugar levels. You must use it together with healthy eating and regular exercise. Swallow ZITUVIMET twice daily with your meals. Your doctor will test your kidneys before starting. Maximum daily dose is 100 mg sitagliptin and 2,000 mg metformin HCl. Common side effects include diarrhea, nausea, vomiting, gas, headache, and cold symptoms. Severe risks include lactic acidosis, pancreatitis, low blood sugar, and kidney failure. Do not take this medicine if you have type 1 diabetes or severe kidney problems. Avoid it if you have metabolic acidosis, diabetic ketoacidosis, or severe allergies to sitagliptin or metformin.",
+      "source_text": "( 2.1 ) The recommended starting dose in patients not currently treated with metformin is 50 mg sitagliptin and 500 mg metformin HCl twice daily, with gradual dose escalation recommended to reduce gas... ( 2.1 ) The starting dose in patients already treated with metformin should provide sitagliptin dosed as 50 mg twice daily (100 mg total daily dose) and the dose of metformin already being taken. 2 DOSAGE AND ADMINISTRATION Take ZITUVIMET orally twice daily with meals. ( 2.1 ) Individualize the dosage of ZITUVIMET on the basis of the patient's current regimen, effectiveness, and tolerability. ... For patients taking metformin HCl 850 mg twice daily, the recommended starting dose of ZITUVIMET is 50 mg sitagliptin and 1,000 mg metformin HCl twice daily. ( 2.1 ) Prior to initiation, assess renal ... 1 INDICATIONS AND USAGE ZITUVIMET is a combination of sitagliptin, a dipeptidyl peptidase-4 (DPP-4) inhibitor, and metformin hydrochloride (HCl), a biguanide, indicated as an adjunct to diet and exerc...",
+      "flesch_reading_ease": 48.03,
+      "flesch_kincaid_grade": 9.49,
+      "meets_grade_6_target": false,
+      "simplification_ratio_NOT_SARI": 0.654,
+      "fidelity_check_pass": true,
+      "sinhala_complete": true
+    }
+  },
+  {
+    "medicine_name": "Ibuprofen",
+    "matched_product_name": "Brufen 400 Tablet",
+    "expected_data_source": [
+      "local_verified"
+    ],
+    "found_in_database": true,
+    "source": "RAG Retrieved Passages + Kaggle Medicine Database + openFDA Verified Labels",
+    "image_url": "https://onemg.gumlet.io/l_watermark_346,w_480,h_480/a_ignore,w_480,h_480,c_fit,q_auto,f_auto/cropped/yssbye7myd6dgld7wn2n.jpg",
+    "composition": "Ibuprofen (400mg)",
+    "manufacturer": "Abbott",
+    "what_it_does": {
+      "english": "Brufen 400 Tablet contains Ibuprofen (400mg). It helps to lower fever. It also relieves headache, toothache, backache, muscle pain, and joint pain.",
+      "sinhala": "බෲෆෙන් 400 (Brufen 400) පෙතිවල ඉබුප්‍රොෆෙන් (Ibuprofen 400mg) අඩංගු වේ. මින් උණ අඩු කරයි. හිසේ කැක්කුම, දත් කැක්කුම, කොන්දේ කැක්කුම සහ ඇඟපත වේදනාව සුව කරයි."
+    },
+    "how_to_take": {
+      "english": "Adults and children 12 years and over take 1 tablet every 4 to 6 hours. Do not take more than 6 tablets in 24 hours. Children under 12 years must ask a doctor.",
+      "sinhala": "අවුරුදු 12 සහ ඊට වැඩි අයට පැය 4ත් 6ත් අතර කාලයකට පෙති 1ක් ගත හැක. පැය 24ක් ඇතුළත පෙති 6කට වඩා බොන්න එපා. අවුරුදු 12ට අඩු ළමයින්ට දීමට පෙර වෛද්‍යවරයෙකුගෙන් අසන්න."
+    },
+    "warnings_and_side_effects": {
+      "english": "This medicine can cause severe stomach bleeding. The risk is higher if you are age 60 or older. It may cause vomiting, nausea, dizziness, stomach pain, or rash. Stop use if swelling occurs.",
+      "sinhala": "මෙම බෙහෙත නිසා බඩෙන් ලේ ගැලීම් ඇතිවිය හැක. අවුරුදු 60ට වැඩි අයට මෙම අවදානම වැඩිය. වමනය, කරකැවිල්ල, බඩේ කැක්කුම හෝ කසන සුළු ලප ඇතිවිය හැක. මුහුණ ඉදිමුණොත් බෙහෙත් බීම නතර කරන්න."
+    },
+    "who_should_not_take": {
+      "english": "Ask your doctor or pharmacist about this.",
+      "sinhala": "මේ ගැන ඔබේ වෛද්‍යවරයාගෙන් හෝ ඖෂධවේදියාගෙන් අසන්න."
+    },
+    "key_points": [
+      "Brufen 400 Tablet reduces fever and relieves pain.",
+      "Take 1 tablet every 4 to 6 hours as needed.",
+      "Do not take more than 6 tablets within 24 hours.",
+      "Stomach bleeding risk is higher for people aged 60 or older.",
+      "Stop taking it right away if you develop skin rash or facial swelling."
+    ],
+    "rag_sources": [
+      {
+        "text": "Warnings Allergy alert: Ibuprofen may cause a severe allergic reaction, especially in people allergic to aspirin. Symptoms may include: rash facial swelling asthma (wheezing) hives skin reddening shoc...",
+        "drug_name": "Ibuprofen",
+        "section": "warnings",
+        "source": "openFDA Drug Labels"
+      },
+      {
+        "text": "Directions do not take more than directed the smallest effective dose should be used adults and children 12 years and over: take 1 tablet every 4 to 6 hours while symptoms persist if pain or fever doe...",
+        "drug_name": "Ibuprofen",
+        "section": "dosage",
+        "source": "openFDA Drug Labels"
+      },
+      {
+        "text": "Stomach bleeding warning: This product contains an NSAID, which may cause severe stomach bleeding.",
+        "drug_name": "Ibuprofen",
+        "section": "warnings",
+        "source": "openFDA Drug Labels"
+      },
+      {
+        "text": "Uses temporarily relieves minor aches and pains due to: headache toothache backache menstrual cramps the common cold muscular aches minor pain of arthritis temporarily reduces fever",
+        "drug_name": "Ibuprofen",
+        "section": "indications",
+        "source": "openFDA Drug Labels"
+      }
+    ],
+    "data_source": "local_verified",
+    "metrics": {
+      "simplified_text": "Brufen 400 Tablet contains Ibuprofen (400mg). It helps to lower fever. It also relieves headache, toothache, backache, muscle pain, and joint pain. Adults and children 12 years and over take 1 tablet every 4 to 6 hours. Do not take more than 6 tablets in 24 hours. Children under 12 years must ask a doctor. This medicine can cause severe stomach bleeding. The risk is higher if you are age 60 or older. It may cause vomiting, nausea, dizziness, stomach pain, or rash. Stop use if swelling occurs. Ask your doctor or pharmacist about this.",
+      "source_text": "Warnings Allergy alert: Ibuprofen may cause a severe allergic reaction, especially in people allergic to aspirin. Symptoms may include: rash facial swelling asthma (wheezing) hives skin reddening shoc... Directions do not take more than directed the smallest effective dose should be used adults and children 12 years and over: take 1 tablet every 4 to 6 hours while symptoms persist if pain or fever doe... Stomach bleeding warning: This product contains an NSAID, which may cause severe stomach bleeding. Uses temporarily relieves minor aches and pains due to: headache toothache backache menstrual cramps the common cold muscular aches minor pain of arthritis temporarily reduces fever",
+      "flesch_reading_ease": 74.29,
+      "flesch_kincaid_grade": 5.04,
+      "meets_grade_6_target": true,
+      "simplification_ratio_NOT_SARI": 0.905,
+      "fidelity_check_pass": true,
+      "sinhala_complete": true
+    }
+  },
+  {
+    "medicine_name": "Naproxen",
+    "matched_product_name": "Headset Tablet",
+    "expected_data_source": [
+      "live_mcp_lookup"
+    ],
+    "found_in_database": true,
+    "source": "Kaggle Medicine Database + Live openFDA Lookup (via MCP)",
+    "image_url": "https://onemg.gumlet.io/l_watermark_346,w_480,h_480/a_ignore,w_480,h_480,c_fit,q_auto,f_auto/cropped/edzufg6nfhvj0hbghqo6.jpg",
+    "composition": "Sumatriptan (85mg) + Naproxen (500mg)",
+    "manufacturer": "Lupin Ltd",
+    "what_it_does": {
+      "english": "Headset Tablet contains Sumatriptan (85mg) and Naproxen (500mg). It treats severe migraine headaches. Naproxen also helps reduce joint pain, swelling, gout, and body pain.",
+      "sinhala": "Headset පෙත්තේ Sumatriptan (85mg) සහ Naproxen (500mg) අඩංගු වෙනවා. මෙය මයිග්‍රේන් කියන තද හිසකැක්කුමට ලබාදෙනවා. Naproxen මගින් සන්ධි වේදනාව සහ ඇඟපත කැක්කුම අඩු කරනවා."
+    },
+    "how_to_take": {
+      "english": "Use the lowest dose for the shortest time. Adults take 250mg to 500mg twice daily for joint pain. Do not give these tablets to children weighing under 50 kilograms.",
+      "sinhala": "අඩුම මාත්‍රාව කෙටිම කාලයක් ගන්න. වැඩිහිටියන් සන්ධි කැක්කුමට 250mg සිට 500mg දක්වා දවසට දෙපාරක් ගන්නවා. බර කිලෝග්‍රෑම් 50ට අඩු ළමයින්ට මෙය දෙන්න එපා."
+    },
+    "warnings_and_side_effects": {
+      "english": "You may feel dizzy, sleepy, weak, or sick. It can cause heartburn, dry mouth, irregular heartbeats, and swelling. It may also cause stomach bleeding and high blood pressure.",
+      "sinhala": "ඔබට කරකැවිල්ල, නින්ද යාම, පපුවේ දාහය හෝ වමනය එන්න පුළුවන්. කට වියළීම, හෘද ස්පන්දනය වෙනස් වීම සහ ඉදිමුම වෙන්න පුළුවන්. බඩවැලේ ලේ ගැලීමද සිදුවිය හැකියි."
+    },
+    "who_should_not_take": {
+      "english": "Do not take if allergic to Naproxen. Avoid if aspirin gives you asthma or allergies. Do not take if having heart bypass surgery.",
+      "sinhala": "Naproxen වලට අසාත්මික නම් ගන්න එපා. ඇස්ප්‍රින් පෙති වලින් ඇදුම හෝ අසාත්මිකතා ආවා නම් ගන්න එපා. හෘද සැත්කම් (CABG) කරන අය මෙය නොගත යුතුයි."
+    },
+    "key_points": [
+      "Headset Tablet treats severe migraines and body pain.",
+      "It contains Sumatriptan (85mg) and Naproxen (500mg).",
+      "Use the lowest dose for the shortest needed time.",
+      "Do not give to children who weigh under 50 kilograms.",
+      "Do not take if aspirin causes you asthma or allergies."
+    ],
+    "rag_sources": [],
+    "data_source": "live_mcp_lookup",
+    "metrics": {
+      "simplified_text": "Headset Tablet contains Sumatriptan (85mg) and Naproxen (500mg). It treats severe migraine headaches. Naproxen also helps reduce joint pain, swelling, gout, and body pain. Use the lowest dose for the shortest time. Adults take 250mg to 500mg twice daily for joint pain. Do not give these tablets to children weighing under 50 kilograms. You may feel dizzy, sleepy, weak, or sick. It can cause heartburn, dry mouth, irregular heartbeats, and swelling. It may also cause stomach bleeding and high blood pressure. Do not take if allergic to Naproxen. Avoid if aspirin gives you asthma or allergies. Do not take if having heart bypass surgery.",
+      "source_text": null,
+      "flesch_reading_ease": 74.39,
+      "flesch_kincaid_grade": 5.04,
+      "meets_grade_6_target": true,
+      "simplification_ratio_NOT_SARI": null,
+      "fidelity_check_pass": true,
+      "sinhala_complete": true
+    }
+  },
+  {
+    "medicine_name": "Combiflam",
+    "matched_product_name": "Combiflam",
+    "expected_data_source": [
+      "live_mcp_lookup",
+      "ai_knowledge_only"
+    ],
+    "found_in_database": false,
+    "source": "AI Knowledge (not in verified database)",
+    "image_url": "",
+    "composition": "",
+    "manufacturer": "",
+    "what_it_does": {
+      "english": "Combiflam helps to reduce body pain and fever. It also reduces swelling in your body.",
+      "sinhala": "කොම්බිෆ්ලෑම් (Combiflam) කියන්නේ ඇඟපත රිදීම සහ උණ අඩු කරන බෙහෙතක්. ඒ වගේම ඇඟේ තියෙන ඉදිමීමත් අඩු කරනවා."
+    },
+    "how_to_take": {
+      "english": "Take this medicine after eating food. Drink a full glass of water with it. Follow your doctor's exact advice.",
+      "sinhala": "මේ බෙහෙත කෑම කෑවාට පස්සේ බොන්න. බෙහෙත් බොනකොට වතුර වීදුරුවක්ම බොන්න. දොස්තර මහත්තයා කිව්ව විදිහටම විතරක් බොන්න."
+    },
+    "warnings_and_side_effects": {
+      "english": "It may cause stomach burn, nausea, or dizziness. Stop taking it if your stomach hurts. Ask your doctor or pharmacist about this.",
+      "sinhala": "මේකෙන් බඩ දැවිල්ල, වමනය එන්න වගේ දැනීම හෝ කැරකිල්ල එන්න පුළුවන්. බඩේ කැක්කුමක් ආවොත් බෙහෙත නවත්වන්න. මේ ගැන දොස්තර මහත්තයාගෙන් හරි ෆාමසියෙන් හරි අහන්න."
+    },
+    "who_should_not_take": {
+      "english": "Do not take this if you have stomach ulcers or severe kidney problems. Ask your doctor or pharmacist about this.",
+      "sinhala": "ඔබට බඩේ තුවාල හෝ වකුගඩු අසනීප තියෙනවා නම් මෙය බොන්න එපා. මේ ගැන දොස්තර මහත්තයාගෙන් හරි ෆාමසියෙන් හරි අහන්න."
+    },
+    "key_points": [
+      "Take Combiflam only after meals. / කොම්බිෆ්ලෑම් බෙහෙත කෑම කෑවාට පස්සේ විතරක් බොන්න.",
+      "It helps with pain and fever. / මේකෙන් ඇඟපත රිදීම සහ උණ අඩු වෙනවා.",
+      "Do not take on an empty stomach. / හිස්බඩ මේ බෙහෙත බොන්න එපා.",
+      "Stop taking it if your stomach hurts. / බඩේ කැක්කුමක් ආවොත් බෙහෙත නවත්වන්න.",
+      "Ask your doctor or pharmacist about this. / මේ ගැන දොස්තර මහත්තයාගෙන් හරි ෆාමසියෙන් හරි අහන්න."
+    ],
+    "rag_sources": [],
+    "data_source": "ai_knowledge_only",
+    "metrics": {
+      "simplified_text": "Combiflam helps to reduce body pain and fever. It also reduces swelling in your body. Take this medicine after eating food. Drink a full glass of water with it. Follow your doctor's exact advice. It may cause stomach burn, nausea, or dizziness. Stop taking it if your stomach hurts. Ask your doctor or pharmacist about this. Do not take this if you have stomach ulcers or severe kidney problems. Ask your doctor or pharmacist about this.",
+      "source_text": null,
+      "flesch_reading_ease": 71.11,
+      "flesch_kincaid_grade": 5.23,
+      "meets_grade_6_target": true,
+      "simplification_ratio_NOT_SARI": null,
+      "fidelity_check_pass": true,
+      "sinhala_complete": true
+    }
+  },
+  {
+    "medicine_name": "Aten 50 Tablet",
+    "matched_product_name": "Aten 50 Tablet",
+    "expected_data_source": [
+      "live_mcp_lookup"
+    ],
+    "found_in_database": true,
+    "source": "Kaggle Medicine Database",
+    "image_url": "https://onemg.gumlet.io/l_watermark_346,w_480,h_480/a_ignore,w_480,h_480,c_fit,q_auto,f_auto/cropped/yd9x9zvhxhokhw1vfnuy.jpg",
+    "composition": "Atenolol (50mg)",
+    "manufacturer": "Zydus Cadila",
+    "what_it_does": {
+      "english": "Aten 50 Tablet contains Atenolol (50mg). It treats high blood pressure. It treats heart-related chest pain. It treats irregular heartbeats. It helps prevent heart attacks.",
+      "sinhala": "Aten 50 Tablet හි Atenolol (50mg) අඩංගු වේ. මෙය අධික රුධිර පීඩනයට ප්‍රතිකාර කරයි. හදවතේ හටගන්නා කැක්කුමට මෙය ප්‍රතිකාර කරයි. අක්‍රමවත් හදවත් ස්පන්දනයට ප්‍රතිකාර කරයි. හෘදයාබාධ වළක්වා ගැනීමට උපකාරී වේ."
+    },
+    "how_to_take": {
+      "english": "Ask your doctor or pharmacist about this.",
+      "sinhala": "මේ පිළිබඳව ඔබේ වෛද්‍යවරයාගෙන් හෝ ඖෂධවේදියාගෙන් විමසන්න."
+    },
+    "warnings_and_side_effects": {
+      "english": "This medicine can cause tiredness. It can cause a slow heart rate. It can make your hands and feet cold. It can cause stomach upset.",
+      "sinhala": "මෙම ඖෂධය නිසා මහන්සිය දැනෙන්න පුළුවන්. හදවත් ස්පන්දනය හෙමින් සිදුවෙන්න පුළුවන්. අත් සහ පාද සීතල වෙන්න පුළුවන්. බඩේ අමාරු ඇතිවෙන්න පුළුවන්."
+    },
+    "who_should_not_take": {
+      "english": "Ask your doctor or pharmacist about this.",
+      "sinhala": "මේ පිළිබඳව ඔබේ වෛද්‍යවරයාගෙන් හෝ ඖෂධවේදියාගෙන් විමසන්න."
+    },
+    "key_points": [
+      "Aten 50 Tablet has Atenolol (50mg).",
+      "It treats high blood pressure and chest pain.",
+      "It treats irregular heartbeats.",
+      "It helps prevent heart attacks.",
+      "Side effects include fatigue, slow heart rate, cold extremities, and stomach trouble."
+    ],
+    "rag_sources": [],
+    "data_source": "local_verified",
+    "metrics": {
+      "simplified_text": "Aten 50 Tablet contains Atenolol (50mg). It treats high blood pressure. It treats heart-related chest pain. It treats irregular heartbeats. It helps prevent heart attacks. Ask your doctor or pharmacist about this. This medicine can cause tiredness. It can cause a slow heart rate. It can make your hands and feet cold. It can cause stomach upset. Ask your doctor or pharmacist about this.",
+      "source_text": null,
+      "flesch_reading_ease": 81.96,
+      "flesch_kincaid_grade": 3.27,
+      "meets_grade_6_target": true,
+      "simplification_ratio_NOT_SARI": null,
+      "fidelity_check_pass": true,
+      "sinhala_complete": true
+    }
+  },
+  {
+    "medicine_name": "Becosules",
+    "matched_product_name": "Becosules",
+    "expected_data_source": [
+      "ai_knowledge_only"
+    ],
+    "found_in_database": false,
+    "source": "AI Knowledge (not in verified database)",
+    "image_url": "",
+    "composition": "",
+    "manufacturer": "",
+    "what_it_does": {
+      "english": "Becosules is a vitamin medicine. It gives your body extra Vitamin B and Vitamin C. It helps you feel active and strong. It keeps your nerves and skin healthy.",
+      "sinhala": "Becosules කියන්නේ විටමින් බී සහ සී තියෙන බෙහෙතක්. මේකෙන් ඇඟට හොඳ ශක්තියක් ලැබෙනවා. ස්නායු සහ සම නිරෝගීව තියාගන්න උදව් වෙනවා."
+    },
+    "how_to_take": {
+      "english": "Usually, take 1 capsule every day. Drink it with water after a meal. Do not chew the capsule. Ask your doctor or pharmacist about this.",
+      "sinhala": "සාමාන්‍යයෙන් දවසට එක කරලක් ගන්නවා. කෑම කෑවාට පස්සේ වතුර එක්ක බොන්න. කරල හපන්න එපා. නිවැරදි ප්‍රමාණය දොස්තර මහත්තයාගෙන් අහගන්න."
+    },
+    "warnings_and_side_effects": {
+      "english": "Your urine may turn bright yellow. This is normal and safe. You might get a mild stomach upset. Ask your doctor or pharmacist if you feel sick.",
+      "sinhala": "මුත්‍රා තද කහ පාට වෙන්න පුළුවන්. ඒකට බය වෙන්න එපා, ඒක සාමාන්‍යයි. බඩේ පොඩි අමාරුවක් එන්නත් පුළුවන්. වෙනසක් තේරුණොත් දොස්තර මහත්තයාගෙන් අහන්න."
+    },
+    "who_should_not_take": {
+      "english": "Do not take it if you are allergic to vitamin pills. Tell your doctor about your other medicines. Always ask your doctor or pharmacist about this.",
+      "sinhala": "විටමින් බෙහෙත් වලට අසාත්මිකතා තියෙනවා නම් ගන්න එපා. ඔබ බොන අනිත් බෙහෙත් ගැන දොස්තරට කියන්න. ගන්න කලින් දොස්තර මහත්තයාගෙන් අහන්න."
+    },
+    "key_points": [
+      "Becosules is a helpful Vitamin B and C medicine.",
+      "Take 1 capsule daily after a meal with water.",
+      "Bright yellow urine is normal with this medicine.",
+      "Do not chew or crush the capsule.",
+      "Ask your doctor or pharmacist about this."
+    ],
+    "rag_sources": [],
+    "data_source": "ai_knowledge_only",
+    "metrics": {
+      "simplified_text": "Becosules is a vitamin medicine. It gives your body extra Vitamin B and Vitamin C. It helps you feel active and strong. It keeps your nerves and skin healthy. Usually, take 1 capsule every day. Drink it with water after a meal. Do not chew the capsule. Ask your doctor or pharmacist about this. Your urine may turn bright yellow. This is normal and safe. You might get a mild stomach upset. Ask your doctor or pharmacist if you feel sick. Do not take it if you are allergic to vitamin pills. Tell your doctor about your other medicines. Always ask your doctor or pharmacist about this.",
+      "source_text": null,
+      "flesch_reading_ease": 76.25,
+      "flesch_kincaid_grade": 4.4,
+      "meets_grade_6_target": true,
+      "simplification_ratio_NOT_SARI": null,
+      "fidelity_check_pass": true,
+      "sinhala_complete": true
+    }
+  },
+  {
+    "medicine_name": "Saridon",
+    "matched_product_name": "Saridon",
+    "expected_data_source": [
+      "ai_knowledge_only",
+      "live_mcp_lookup"
+    ],
+    "found_in_database": false,
+    "source": "AI Knowledge (not in verified database)",
+    "image_url": "",
+    "composition": "",
+    "manufacturer": "",
+    "what_it_does": {
+      "english": "Saridon helps to reduce body pain and severe headaches. It also helps to lower your body fever. Ask your doctor or pharmacist about this.",
+      "sinhala": "සැරිඩොන් (Saridon) කියන්නේ තද ඔළුවේ කැක්කුම සහ ඇඟපත වේදනාව අඩු කරන බෙහෙතක්. ඒ වගේම උණ බැසීමටත් මෙය උදව් වෙනවා. මේ බෙහෙත ගැන ඔබේ දොස්තර මහතාගෙන් හෝ ෆාමසි මහතාගෙන් අහන්න."
+    },
+    "how_to_take": {
+      "english": "Take Saridon after eating meals with a full glass of water. Do not take extra tablets. Ask your doctor or pharmacist about the right dose.",
+      "sinhala": "සැරිඩොන් (Saridon) පෙත්ත කෑමට පස්සේ වතුර වීදුරුවක් එක්ක බොන්න. වැඩියෙන් පෙති බොන්න එපා. නියමිත ප්‍රමාණය දැනගන්න දොස්තර මහතාගෙන් හෝ ෆාමසි මහතාගෙන් අහන්න."
+    },
+    "warnings_and_side_effects": {
+      "english": "It can cause stomach pain or nausea. You might feel restless or have sleep trouble. Stop taking it if skin rashes appear. Ask your doctor if you feel unwell.",
+      "sinhala": "බඩේ කැක්කුම හෝ වමනය යන ගතිය එන්න පුළුවන්. නින්ද යන්නේ නැති ගතියක් එන්නත් පුළුවන්. සමේ දද දැම්මොත් බෙහෙත නවත්වන්න. අමාරුවක් ආවොත් දොස්තර මහතාට කියන්න."
+    },
+    "who_should_not_take": {
+      "english": "Do not take this if you have severe liver or kidney problems. Avoid it if you have pain medicine allergies. Ask your doctor or pharmacist about this.",
+      "sinhala": "අක්මාවේ හෝ වකුගඩු වල තදබල අමාරු තියෙනවා නම් බොන්න එපා. වේදනා නාශක බෙහෙත් වලට අසාත්මිකතා තියෙනවා නම් ගන්න එපා. මේ ගැන දොස්තර මහතාගෙන් හෝ ෆාමසි මහතාගෙන් අහන්න."
+    },
+    "key_points": [
+      "Saridon reduces headaches, body pain, and fever.",
+      "Take it after meals with a glass of water.",
+      "Do not take more than the recommended amount.",
+      "Avoid if you have liver or kidney problems.",
+      "Ask your doctor or pharmacist about this medicine."
+    ],
+    "rag_sources": [],
+    "data_source": "ai_knowledge_only",
+    "metrics": {
+      "simplified_text": "Saridon helps to reduce body pain and severe headaches. It also helps to lower your body fever. Ask your doctor or pharmacist about this. Take Saridon after eating meals with a full glass of water. Do not take extra tablets. Ask your doctor or pharmacist about the right dose. It can cause stomach pain or nausea. You might feel restless or have sleep trouble. Stop taking it if skin rashes appear. Ask your doctor if you feel unwell. Do not take this if you have severe liver or kidney problems. Avoid it if you have pain medicine allergies. Ask your doctor or pharmacist about this.",
+      "source_text": null,
+      "flesch_reading_ease": 76.97,
+      "flesch_kincaid_grade": 4.53,
+      "meets_grade_6_target": true,
+      "simplification_ratio_NOT_SARI": null,
+      "fidelity_check_pass": true,
+      "sinhala_complete": true
+    }
+  }
+]

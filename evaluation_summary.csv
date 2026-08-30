@@ -1,0 +1,9 @@
+medicine_name,expected_data_source,actual_data_source,flesch_reading_ease,flesch_kincaid_grade,meets_grade_6_target,simplification_ratio_NOT_SARI,fidelity_check_pass,sinhala_complete
+Atenolol,local_verified,local_verified,81.19,3.77,True,,True,True
+Metformin,local_verified,live_mcp_lookup,48.03,9.49,False,0.654,True,True
+Ibuprofen,local_verified,local_verified,74.29,5.04,True,0.905,True,True
+Naproxen,live_mcp_lookup,live_mcp_lookup,74.39,5.04,True,,True,True
+Combiflam,live_mcp_lookup|ai_knowledge_only,ai_knowledge_only,71.11,5.23,True,,True,True
+Aten 50 Tablet,live_mcp_lookup,local_verified,81.96,3.27,True,,True,True
+Becosules,ai_knowledge_only,ai_knowledge_only,76.25,4.4,True,,True,True
+Saridon,ai_knowledge_only|live_mcp_lookup,ai_knowledge_only,76.97,4.53,True,,True,True

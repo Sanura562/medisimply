@@ -61,6 +61,12 @@ export default function Results({ data, onReset }) {
           >
             {badge.label}
           </span>
+          <p className="text-xs text-on-surface/45 mt-1.5">
+            AI-generated — verify with your doctor{" "}
+            <span className="font-sinhala leading-sinhala">
+              · මෙය AI මගින් සකසන ලදි, දොස්තරගෙන් තහවුරු කරගන්න
+            </span>
+          </p>
         </div>
       </div>
 
@@ -144,9 +150,12 @@ export default function Results({ data, onReset }) {
       )}
 
       {/* Source + Reset */}
-      <p className="text-center text-sm text-on-surface/50 mb-4">
-        🔍 Source: {data.source}
-      </p>
+      <div className="flex items-center justify-center gap-2.5 bg-surface-container-lowest border border-outline-variant/25 rounded-full px-5 py-3 mb-4 w-fit mx-auto">
+        <span className="text-lg flex-shrink-0">🔍</span>
+        <span className="text-base font-medium text-on-surface/75">
+          Source: {data.source}
+        </span>
+      </div>
       <div className="text-center mb-5">
         <button
           onClick={onReset}

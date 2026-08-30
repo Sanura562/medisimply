@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 
-export default function SearchBox({ onSearch, apiUrl }) {
+export default function SearchBox({ onSearch, apiUrl, variant = "default" }) {
+  const isHero = variant === "hero";
   const [query, setQuery] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   const [showDrop, setShowDrop] = useState(false);
@@ -38,12 +39,26 @@ export default function SearchBox({ onSearch, apiUrl }) {
   }
 
   return (
-    <div className="bg-surface-container-lowest rounded-card p-7 mb-7">
-      <div className="font-display text-lg font-bold text-on-surface mb-1">
-        🔍 Enter Medicine Name
+    <div
+      className={`bg-surface-container-lowest rounded-card mb-7 ${
+        isHero ? "p-8 sm:p-10" : "p-7"
+      }`}
+    >
+      <div
+        className={`font-display font-bold text-on-surface mb-1 ${
+          isHero ? "text-2xl" : "text-lg"
+        }`}
+      >
+        🔍 {isHero ? "Search for Medicine or Symptoms" : "Enter Medicine Name"}
       </div>
-      <p className="font-sinhala leading-sinhala text-[15px] text-on-surface/50 mb-4">
-        බෙහෙතේ නම ඇතුළත් කරන්න
+      <p
+        className={`font-sinhala leading-sinhala text-on-surface/50 mb-4 ${
+          isHero ? "text-lg" : "text-[15px]"
+        }`}
+      >
+        {isHero
+          ? "බෙහෙතක් හෝ රෝග ලක්ෂණයක් සොයන්න"
+          : "බෙහෙතේ නම ඇතුළත් කරන්න"}
       </p>
 
       <form onSubmit={handleSubmit} className="flex gap-3 relative">
@@ -59,11 +74,17 @@ export default function SearchBox({ onSearch, apiUrl }) {
             }
           }}
           placeholder="e.g. Augmentin, Metformin, Aspirin..."
-          className="flex-1 px-5 py-4 border-2 border-transparent rounded-xl text-xl text-on-surface bg-surface-container-low focus:outline-none focus:border-primary/40 focus:bg-surface-container-lowest transition-all placeholder:text-on-surface/30 placeholder:text-lg"
+          className={`flex-1 border-2 border-transparent rounded-xl text-on-surface bg-surface-container-low focus:outline-none focus:border-primary/40 focus:bg-surface-container-lowest transition-all placeholder:text-on-surface/30 ${
+            isHero
+              ? "px-6 py-6 text-2xl placeholder:text-xl"
+              : "px-5 py-4 text-xl placeholder:text-lg"
+          }`}
         />
         <button
           type="submit"
-          className="min-h-14 px-8 bg-[linear-gradient(135deg,var(--color-primary),var(--color-primary-container))] text-white rounded-cta text-lg font-bold hover:-translate-y-0.5 hover:shadow-ambient active:translate-y-0 transition-all whitespace-nowrap"
+          className={`bg-[linear-gradient(135deg,var(--color-primary),var(--color-primary-container))] text-white rounded-cta font-bold hover:-translate-y-0.5 hover:shadow-ambient active:translate-y-0 transition-all whitespace-nowrap ${
+            isHero ? "min-h-16 px-10 text-xl" : "min-h-14 px-8 text-lg"
+          }`}
         >
           ✨ Explain
         </button>

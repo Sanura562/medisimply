@@ -506,21 +506,35 @@ def retrieve_relevant_chunks(query, top_k=5):
 
 # FAISS always returns its top_k NEAREST neighbours, even for a query that
 # isn't really about anything in the index (there's no "no match" option).
-# For the NEW data_source label only (this does not affect what's passed to
-# simplify_medicine, or the rag_sources shown to the user - both unchanged),
-# a distance threshold distinguishes "actually relevant local passages" from
-# "nearest available passages that aren't really about this query", so a
-# nonsense drug name is correctly labeled ai_knowledge_only instead of
-# local_verified. Real matches in this dataset score ~0.5-0.7; unrelated
-# nearest-neighbours score ~0.77+.
+# This threshold filters OUT chunks that aren't actually relevant - applied
+# once, right after retrieval, so irrelevant chunks never reach the prompt,
+# the data_source label, or the sources shown to the user. Real matches in
+# this dataset score ~0.5-0.7; unrelated nearest-neighbours score ~0.77+.
+#
+# The threshold alone is NOT sufficient, though: generic OTC pain-reliever
+# phrasing ("temporarily relieves minor aches and pains...") scores as low
+# as ~0.66 - comfortably under this threshold - for a completely unrelated
+# drug (e.g. an Ibuprofen chunk for a "Saridon" query), because embedding
+# distance measures phrasing similarity, not drug identity. The RAG corpus
+# is built from a small fixed list of specific reference drugs, so a chunk
+# is only trustworthy grounding if its own drug_name actually matches the
+# query - that check (_rag_chunk_matches_query) is the real guard here; the
+# distance threshold just additionally trims noisy same-drug chunks.
 RAG_RELEVANCE_THRESHOLD = 0.72
 
 
-def _rag_results_are_relevant(rag_results):
-    if not rag_results:
-        return False
-    best_score = min(r.get("relevance_score", float("inf")) for r in rag_results)
-    return best_score < RAG_RELEVANCE_THRESHOLD
+def _rag_chunk_matches_query(medicine_name, chunk_drug_name):
+    query = medicine_name.strip().lower()
+    drug = chunk_drug_name.strip().lower()
+    return bool(query) and bool(drug) and (query in drug or drug in query)
+
+
+def filter_relevant_chunks(rag_results, medicine_name):
+    return [
+        r for r in rag_results
+        if r.get("relevance_score", float("inf")) < RAG_RELEVANCE_THRESHOLD
+        and _rag_chunk_matches_query(medicine_name, r.get("drug_name", ""))
+    ]
 
 
 # --- LLM with RAG ---
@@ -618,6 +632,8 @@ JSON format only:
 """
 
     response = client.models.generate_content(model=MODEL, contents=prompt)
+    if not response.text:
+        raise ValueError("Gemini returned no text content (possibly blocked by safety filters or an unusual finish_reason)")
     response_text = response.text.strip()
 
     if response_text.startswith("```"):
@@ -625,6 +641,30 @@ JSON format only:
         response_text = response_text.rsplit("```", 1)[0]
 
     return json.loads(response_text)
+
+
+def check_drug_name_consistency(medicine_name, result):
+    """
+    Safety-net, not a gate: confirms the generated content actually mentions
+    the drug that was searched, to catch wrong-drug hallucinations (grounding
+    the answer in an unrelated drug's data) via logs/tests rather than a user
+    noticing in a demo. Logs only - a legitimate answer may reasonably use a
+    different form of the name (generic vs. brand), so this doesn't block.
+    """
+    combined_text = " ".join([
+        result["what_it_does"]["english"],
+        result["how_to_take"]["english"],
+        result["warnings_and_side_effects"]["english"],
+        result["who_should_not_take"]["english"],
+        " ".join(result.get("key_points", [])),
+    ]).lower()
+
+    name_token = medicine_name.strip().lower().split()[0] if medicine_name.strip() else ""
+    if name_token and name_token not in combined_text:
+        print(
+            f"[Consistency Check] WARNING: generated content for '{medicine_name}' "
+            f"never mentions '{name_token}' - possible wrong-drug hallucination."
+        )
 
 
 # --- Endpoints ---
@@ -690,11 +730,13 @@ def lookup_medicine(query: MedicineQuery):
     kaggle_match, openfda_match = search_local_databases(medicine_name)
     found = kaggle_match is not None or openfda_match is not None
 
-    # Step 2: RAG retrieval - find relevant passages
-    rag_results = retrieve_relevant_chunks(
+    # Step 2: RAG retrieval - find relevant passages, then drop any chunk
+    # that isn't actually about this drug (see filter_relevant_chunks) before
+    # it can reach the prompt, the label, or the sources shown to the user.
+    rag_results = filter_relevant_chunks(retrieve_relevant_chunks(
         f"{medicine_name} medicine uses dosage warnings side effects",
         top_k=5
-    )
+    ), medicine_name)
 
     # Step 2.5 (NEW, agentic): let Gemini decide - based on what step 1/2 found -
     # whether to call the live search_medicine MCP tool. No hardcoded if/else;
@@ -708,7 +750,7 @@ def lookup_medicine(query: MedicineQuery):
 
     if live_data:
         data_source = "live_mcp_lookup"
-    elif found or _rag_results_are_relevant(rag_results):
+    elif found or rag_results:
         data_source = "local_verified"
     else:
         data_source = "ai_knowledge_only"
@@ -740,6 +782,7 @@ def lookup_medicine(query: MedicineQuery):
     # Step 4: Call LLM with RAG context (+ live MCP data, if any)
     try:
         result = simplify_medicine(medicine_name, kaggle_match, openfda_match, rag_results, live_data)
+        check_drug_name_consistency(medicine_name, result)
 
         # Build source attribution for frontend
         rag_source_info = [
